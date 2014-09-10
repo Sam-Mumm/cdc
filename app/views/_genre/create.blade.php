@@ -17,6 +17,6 @@
                 </div>
             </div>
         </div>
-        {{Form::submit('Erstellen');}}
+        {{Form::submit('erstellen');}}
     {{Form::close()}}
 @stop

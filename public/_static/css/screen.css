@@ -24,7 +24,7 @@ div.cell
     width: 20%;
 }
 
-.w85
+.w80
 {
     width: 80%;
 }
@@ -33,4 +33,14 @@ div.clear
 {
     clear: both;
     float: none;
+}
+
+ul.pagination
+{
+    list-style-type: none;
+}
+
+ul.pagination li
+{
+    display: inline;
 }

@@ -9,10 +9,11 @@ class ArtistController extends \BaseController
             }
             else
             {
+//                $oArtists = Artist::paginate(50);
                 $oArtists = Artist::paginate(50);
             }
-            return View::make('_common.table')
-                    ->with('datas',$oArtists);
+            return View::make('_artist.table')
+                    ->with('artists',$oArtists);
         }
         
         public function postIndex($param = null)
@@ -23,12 +24,6 @@ class ArtistController extends \BaseController
                 return Response::json($oArtists,200);
             }
             return Response::json(array('msg'=>'call this never without parameter'),400);
-        }
-        
-        public function getEdit($id)
-        {
-            $oArtist = Artist::find($id);
-            return Response::json($oArtist,200);
         }
 
         public function getCreate()
@@ -59,42 +54,46 @@ class ArtistController extends \BaseController
             }
 	}
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function postUpdate()
-	{
-            $artist = Artist::find(Input::post('id'));
+        public function getEdit($id)
+        {
+            $oArtist = Artist::find($id);
 
-            if(is_object($artist))
-            {                    
-                $validator = validator::make(Input::post(name), Artist::$rules);
+            if(is_object($oArtist))
+            {
+                return View::make('_artist.edit')->with('data', $oArtist);
+            }        
+        }
+        
+        public function postUpdate($id)
+        {
+            $oArtist = Artist::find($id);
 
+            if(is_object($oArtist))
+            {
+                $validator = Validator::make(Input::all(), Artist::$rules);
+                
                 if($validator->passes())
-                {   
-                    $artist->name=$name;
-                    $artist->save();
+                {
+                    $oArtist->first_name=Input::get('first_name');
+                    $oArtist->last_name=Input::get('last_name');
+                    $oArtist->save();
+                    return Redirect::to('artist')->with('message','artist updated!');
+                }
+                else
+                {
+                    return Redirect::to('artist/edit')->withErrors($validator)->withInput();                
                 }
             }
-	}
-
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function postDestroy($id)
+        }
+        
+	public function getDestroy($id)
 	{
-            $artist = Artist::find(Input::post('id'));
+            $oArtist = Artist::find($id);
 
-            if(is_object($artist))
+            if(is_object($oArtist))
             {
-                $artist->destroy();
+                $oArtist->destroy($id);
+                return Redirect::to('artist')->with('message','artist successfully deleted!');
             }
         }
 }

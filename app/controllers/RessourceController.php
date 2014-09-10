@@ -11,8 +11,8 @@ class RessourceController extends \BaseController
             {
                 $oRessources = Ressource::paginate(50);
             }
-            return View::make('_common.table')
-                    ->with('datas',$oRessources);
+            return View::make('_ressource.table')
+                    ->with('ressources',$oRessources);
         }
         
         public function postIndex($param = null)
@@ -47,56 +47,47 @@ class RessourceController extends \BaseController
             }
 	}
         
-        
         public function getEdit($id)
         {
             $oRessource = Ressource::find($id);
-            return Response::json($oRessource,200);
+
+            if(is_object($oRessource))
+            {
+                return View::make('_ressource.edit')->with('data', $oRessource);
+            }        
         }
+        
+        public function postUpdate($id)
+        {
+            $oRessource = Ressource::find($id);
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function postUpdate()
-	{
-            $ressource = Ressource::find(Input::post('id'));
-
-            if(is_object($ressource))
-            {                    
-                $validator = validator::make(Input::post(name), Ressource::$rules);
-
+            if(is_object($oRessource))
+            {
+                $validator = Validator::make(Input::all(), Ressource::$rules);
+                
                 if($validator->passes())
-                {   
-                    $ressource->name=$name;
-                    $ressource->save();
+                {
+                    $oRessource->name=Input::get('medium');
+                    $oRessource->save();
+                    return Redirect::to('ressource')->with('message','ressource updated!');
+                }
+                else
+                {
+                    return Redirect::to('ressource/edit')->withErrors($validator)->withInput();                
                 }
             }
-	}
-
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function postDestroy($id)
+        }
+        
+	public function getDestroy($id)
 	{
-            $ressource = Ressource::find(Input::post('id'));
+            $oRessource = Ressource::find($id);
 
-            if(is_object($ressource))
+            if(is_object($oRessource))
             {
-                $ressource->destroy();
+                $oRessource->destroy($id);
+                return Redirect::to('ressource')->with('message','ressource successfully deleted!');
             }
         }
+        
 }
 ?>

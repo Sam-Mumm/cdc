@@ -8,6 +8,7 @@
         </title>
         @section('css')
             {{ HTML::style('_static/css/screen.css'); }}
+            {{ HTML::style('_static/css/bootstrap.min.css'); }}
         @show
     </head>
     <body>
@@ -32,6 +33,7 @@
                 });
             </script>
             {{ HTML::script('_static/js/jquery.min.js'); }}
+            {{ HTML::script('_static/js/bootstrap.min.js'); }}
         @show
     </body>
 </html>

@@ -12,8 +12,8 @@ class GenreController extends \BaseController
             {
                 $oGenres = Genre::paginate(50);
             }
-            return View::make('_common.table')
-                    ->with('datas',$oGenres);
+            return View::make('_genre.table')
+                    ->with('genres',$oGenres);
         }
         
         public function postIndex($param = null)
@@ -59,14 +59,13 @@ class GenreController extends \BaseController
 
             if(is_object($oGenre))
             {
-                return View::make('_genre.edit')->with('data',$oGenres);  
-
+                return View::make('_genre.edit')->with('data',$oGenre);
             }        
         }
         
         public function postUpdate($id)
         {
-            $oGenre = Genre::find(Input::get('id'));
+            $oGenre = Genre::find($id);
 
             if(is_object($oGenre))
             {
@@ -92,13 +91,14 @@ class GenreController extends \BaseController
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function postDestroy($id)
+	public function getDestroy($id)
 	{
-            $genre = Genre::find(Input::get('id'));
+            $oGenre = Genre::find($id);
 
-            if(is_object($genre))
+            if(is_object($oGenre))
             {
-                $genre->destroy();
+                $oGenre->destroy($id);
+                return Redirect::to('genre')->with('message','genre successfully deleted!');
             }
         }
 }

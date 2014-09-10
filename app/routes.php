@@ -15,6 +15,7 @@ Route::controller('genre','GenreController');
 Route::controller('category','CategoryController');
 Route::controller('ressource','RessourceController');
 Route::controller('artist','ArtistController');
+Route::controller('album','AlbumController');
 
 Route::get('/', function()
 {

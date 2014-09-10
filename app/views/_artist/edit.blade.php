@@ -6,27 +6,27 @@
     @endforeach
 
 
-    {{Form::open(array('url' =>'category/store', 'method' => 'post'))}}    
+    {{Form::open(array('url' =>'artist/update/'.$data->id, 'method' => 'post'))}}    
         <div class="grid">
             <div class="row">
                 <div class="cell w20">
-                    {{Form::label('name', 'Kategorie:')}}
+                    {{Form::label('first_name', 'Vorname/Artikel')}}
                 </div>
                 <div class="cell w80">
-                    {{Form::text('name', null, array('placeholder'=>'Kategoriename', 'required'=>'required', 'maxlength'=>50));}}
+                    {{Form::text('first_name', $data->first_name, array('placeholder'=>'Vorname/Artikel', 'maxlength'=>50));}}
                 </div>
             </div>
             <div class="clear">
             <div class="row">
                 <div class="cell w20">
-                    {{Form::label('show_artist', 'K&uuml;nstler anzeigen:')}}
+                    {{Form::label('last_name', 'Name/Gruppe:')}}
                 </div>
                 <div class="cell w80">
-                    {{Form::select('show_artist', array('0' => 'nein', '1' => 'ja')) }}
+                    {{Form::text('last_name', $data->last_name, array('placeholder'=>'Name/Gruppenname', 'required'=>'required', 'maxlength'=>255));}}
                 </div>
             </div> 
             <div class="clear">
         </div>
-        {{Form::submit('erstellen');}}
+        {{Form::submit('aktualisieren');}}
     {{Form::close()}}
 @stop

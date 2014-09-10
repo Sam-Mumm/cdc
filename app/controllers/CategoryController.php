@@ -12,8 +12,8 @@ class CategoryController extends \BaseController {
             {
                 $oCategories = Category::paginate(50);
             }
-            return View::make('_common.table')
-                    ->with('datas',$oCategories);
+            return View::make('_category.table')
+                    ->with('categories',$oCategories);
         }
         
         public function postIndex($param = null)
@@ -46,6 +46,49 @@ class CategoryController extends \BaseController {
             else
             {
                 return Redirect::to('category/create')->withErrors($validator)->withInput();                
+            }
+        }
+        
+        public function getEdit($id)
+        {
+            $oCategory = Category::find($id);
+
+            if(is_object($oCategory))
+            {
+                return View::make('_category.edit')->with('data',$oCategory);
+            }        
+        }
+        
+        public function postUpdate($id)
+        {
+            $oCategory = Category::find($id);
+
+            if(is_object($oCategory))
+            {
+                $validator = Validator::make(Input::all(), Category::$rules);
+                
+                if($validator->passes())
+                {
+                    $oCategory->name=Input::get('name');
+                    $oCategory->show_artist=Input::get('show_artist');
+                    $oCategory->save();
+                    return Redirect::to('category')->with('message','category updated!');
+                }
+                else
+                {
+                    return Redirect::to('category/edit')->withErrors($validator)->withInput();                
+                }
+            }
+        }
+                
+        public function getDestroy($id)
+	{
+            $oCategory = Category::find($id);
+
+            if(is_object($oCategory))
+            {
+                $oCategory->destroy($id);
+                return Redirect::to('category')->with('message','category successfully deleted!');
             }
         }
 }

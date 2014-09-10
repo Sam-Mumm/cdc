@@ -6,14 +6,14 @@
     @endforeach
 
 
-    {{Form::open(array('url' =>'genre/update/'.$data->id, 'method' => 'post'))}}    
+    {{Form::open(array('url' =>'ressource/update/'.$data->id, 'method' => 'post'))}}    
         <div class="grid">
             <div class="row">
                 <div class="cell w20">
-                    {{Form::label('name', 'Genre:')}}
+                    {{Form::label('medium', 'Tontr&auml;ger:')}}
                 </div>
                 <div class="cell w80">
-                    {{Form::text('name', $data->name, array('placeholder'=>'Genrebezeichnung', 'required'=>'required', 'maxlength'=>50));}}
+                    {{Form::text('medium', $data->name, array('placeholder'=>'Medium', 'required'=>'required', 'maxlength'=>50));}}
                 </div>
             </div>
         </div>

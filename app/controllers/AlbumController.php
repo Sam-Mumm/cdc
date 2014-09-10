@@ -2,15 +2,29 @@
 
 class AlbumController extends \BaseController {
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		//
-	}
+        public function getIndex($param = null)
+        {
+            if (!is_null($param))
+            {
+                $oAlbums = Album::where('title','like',$param . '%')->paginate(50);
+            }
+            else
+            {
+                $oAlbums = Album::paginate(50);
+            }
+            return View::make('_album.table')
+                    ->with('albums',$oAlbums);
+        }
+        
+        public function postIndex($param = null)
+        {
+            if (!is_null($param))
+            {
+                $oRessources = Ressource::where('name','like',$param . '%')->get();
+                return Response::json($oRessources,200);
+            }
+            return Response::json(array('msg'=>'call this never without parameter'),400);
+        }
 
 
 	/**
@@ -77,9 +91,15 @@ class AlbumController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
-	{
-		//
+	public function getDestroy($id)
+        {
+            $oAlbum = Artist::find($id);
+
+            if(is_object($oAlbum))
+            {
+                $oAlbum->destroy($id);
+                return Redirect::to('album')->with('message','album successfully deleted!');
+            }
 	}
 
 

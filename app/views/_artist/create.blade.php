@@ -27,6 +27,6 @@
             </div> 
             <div class="clear">
         </div>
-        {{Form::submit('Erstellen');}}
+        {{Form::submit('erstellen');}}
     {{Form::close()}}
 @stop
