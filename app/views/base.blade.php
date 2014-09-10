@@ -12,8 +12,13 @@
         @show
     </head>
     <body>
-        @yield('content')
+        @include('sidebar')
         
+        <div class="container">
+          <div class="text-center">
+                @yield('content')
+           </div>
+        </div><!-- /.container -->       
         @section('javascript')
             <script data-id="App.Config">
                 var App = {};

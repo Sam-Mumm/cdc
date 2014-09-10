@@ -2,11 +2,16 @@
 
 @section('content')
 <table>
+    <tr>
+        <th>&nbsp;</th>
+        <th>Given name/Article</th>
+        <th>Surname/Group</th>
+    </tr>
     @foreach($artists as $artist)
             <tr>
                 <td>
                     <a href="{{url('artist/edit/'.$artist->id)}}"><span class="glyphicon glyphicon-pencil"></span></a>
-                    <a href="{{url('artist/destroy/'.$artist->id)}}" data-confirm><span class="glyphicon glyphicon-trash"></span></a>
+                    <a href="{{url('artist/destroy/'.$artist->id)}}" data-confirm="Do you really want to delete the artist?"><span class="glyphicon glyphicon-trash"></span></a>
                 </td>
                 <td>{{$artist->first_name}}</td>
                 <td>{{$artist->last_name}}</td>

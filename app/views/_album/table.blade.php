@@ -2,10 +2,19 @@
 
 @section('content')
 <table>
+    <tr>
+        <th>&nbsp;</th>
+        <th>Artist/Group</th>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Genre</th>
+        <th>Medium</th>
+        <th>Year</th>
+    </tr>
     @foreach($albums as $album)
             <tr>
                 <td>
-                    <a href="{{url('album/destroy/'.$album->id)}}" data-confirm><span class="glyphicon glyphicon-trash"></span></a>
+                    <a href="{{url('album/destroy/'.$album->id)}}" data-confirm="Do you really want to delete the album?"><span class="glyphicon glyphicon-trash"></span></a>
                 </td>
                 <td>
                     @if(!$album->category->show_artist)
