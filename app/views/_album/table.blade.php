@@ -5,7 +5,7 @@
     @foreach($albums as $album)
             <tr>
                 <td>
-                    <a href="./artist/destroy/{{$album->id}}"><span class="glyphicon glyphicon-trash"></span></a>
+                    <a href="{{url('album/destroy/'.$album->id)}}" data-confirm><span class="glyphicon glyphicon-trash"></span></a>
                 </td>
                 <td>
                     @if(!$album->category->show_artist)
@@ -21,4 +21,9 @@
     @endforeach
 </table>
 {{$albums->links()}}
+@stop
+
+@section('javascript')
+    @parent
+    {{ HTML::script('_static/js/confirm.js'); }}
 @stop

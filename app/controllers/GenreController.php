@@ -91,7 +91,7 @@ class GenreController extends \BaseController
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function getDestroy($id)
+	public function postDestroy($id)
 	{
             $oGenre = Genre::find($id);
 

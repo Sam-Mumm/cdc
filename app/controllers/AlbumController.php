@@ -91,9 +91,9 @@ class AlbumController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function getDestroy($id)
+	public function postDestroy($id)
         {
-            $oAlbum = Artist::find($id);
+            $oAlbum = Album::find($id);
 
             if(is_object($oAlbum))
             {

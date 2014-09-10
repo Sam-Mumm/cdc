@@ -86,7 +86,7 @@ class ArtistController extends \BaseController
             }
         }
         
-	public function getDestroy($id)
+	public function postDestroy($id)
 	{
             $oArtist = Artist::find($id);
 

@@ -81,7 +81,7 @@ class CategoryController extends \BaseController {
             }
         }
                 
-        public function getDestroy($id)
+        public function postDestroy($id)
 	{
             $oCategory = Category::find($id);
 
