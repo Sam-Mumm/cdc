@@ -6,27 +6,19 @@
     @endforeach
 
 
-    {{Form::open(array('url' =>'category/update/'.$data->id, 'method' => 'post'))}}    
-        <div class="grid">
-            <div class="row">
-                <div class="cell w20">
-                    {{Form::label('name', 'Kategorie:')}}
-                </div>
-                <div class="cell w80">
-                    {{Form::text('name', $data->name, array('placeholder'=>'Kategoriename', 'required'=>'required', 'maxlength'=>50));}}
-                </div>
+    {{Form::open(array('url' =>'category/update/'.$data->id, 'method' => 'post', 'role' => 'form', 'class' => 'form-horizontal'))}}    
+        <div class="form-group">
+            {{Form::label('name', trans('messages.Category'), array('class' => 'col-sm-2 control-label'))}}
+            <div class="col-sm-10">
+                {{Form::text('name', $data->name, array('placeholder'=>trans('messages.Category'), 'required'=>'required', 'maxlength'=>50));}}
             </div>
-            <div class="clear">
-            <div class="row">
-                <div class="cell w20">
-                    {{Form::label('show_artist', 'K&uuml;nstler anzeigen:')}}
-                </div>
-                <div class="cell w80">
-                    {{Form::select('show_artist', array('0' => 'nein', '1' => 'ja'), $data->show_artist) }}
-                </div>
-            </div> 
-            <div class="clear">
         </div>
-        {{Form::submit('aktualisieren');}}
+        <div class="form-group">
+            {{Form::label('show_artist', trans('messages.show artist'), array('class' => 'col-sm-2 control-label'))}}
+            <div class="col-sm-10">
+                {{Form::select('show_artist', array('0' => 'nein', '1' => 'ja'), $data->show_artist) }}
+            </div>
+        </div>
+        {{Form::submit(trans('messages.update'), array('class' => 'btn btn-default'));}}
     {{Form::close()}}
 @stop

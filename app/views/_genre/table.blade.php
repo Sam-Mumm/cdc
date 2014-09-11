@@ -1,16 +1,16 @@
 @extends('base')
 
 @section('content')
-<table>
+<table class="table-bordered">
     <tr>
         <th>&nbsp;</th>
-        <th>Genre</th>
+        <th>{{trans('messages.Genre')}}</th>
     </tr>
     @foreach($genres as $genre)
             <tr>
                 <td>
                     <a href="{{url('genre/edit/'.$genre->id)}}"><span class="glyphicon glyphicon-pencil"></span></a>
-                    <a href="{{url('genre/destroy/'.$genre->id)}}" data-confirm="Do you really want to delete the genre?"><span class="glyphicon glyphicon-trash"></span></a>
+                    <a href="{{url('genre/destroy/'.$genre->id)}}" data-confirm="{{trans('messages.Do you really want to delete the genre?')}}"><span class="glyphicon glyphicon-trash"></span></a>
                 </td>
                 <td>{{$genre->name}}</td>
             </tr>

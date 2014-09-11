@@ -1,20 +1,20 @@
 @extends('base')
 
 @section('content')
-<table>
+<table class="table-bordered">
     <tr>
         <th>&nbsp;</th>
-        <th>Artist/Group</th>
-        <th>Title</th>
-        <th>Category</th>
-        <th>Genre</th>
-        <th>Medium</th>
-        <th>Year</th>
+        <th>{{trans('messages.Artist/Group')}}</th>
+        <th>{{trans('messages.Title')}}</th>
+        <th>{{trans('messages.Category')}}</th>
+        <th>{{trans('messages.Genre')}}</th>
+        <th>{{trans('messages.Storage Medium')}}</th>
+        <th>{{trans('messages.Year')}}</th>
     </tr>
     @foreach($albums as $album)
             <tr>
                 <td>
-                    <a href="{{url('album/destroy/'.$album->id)}}" data-confirm="Do you really want to delete the album?"><span class="glyphicon glyphicon-trash"></span></a>
+                    <a href="{{url('album/destroy/'.$album->id)}}" data-confirm="{{trans('messages.Do you really want to delete the album?')}}"><span class="glyphicon glyphicon-trash"></span></a>
                 </td>
                 <td>
                     @if(!$album->category->show_artist)

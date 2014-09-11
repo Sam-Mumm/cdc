@@ -6,27 +6,19 @@
     @endforeach
 
 
-    {{Form::open(array('url' =>'artist/store', 'method' => 'post'))}}    
-        <div class="grid">
-            <div class="row">
-                <div class="cell w20">
-                    {{Form::label('first_name', 'Vorname/Artikel')}}
-                </div>
-                <div class="cell w80">
-                    {{Form::text('first_name', null, array('placeholder'=>'Vorname/Artikel', 'maxlength'=>50));}}
-                </div>
+    {{Form::open(array('url' =>'artist/store', 'method' => 'post', 'role' => 'form', 'class' => 'form-horizontal'))}}
+        <div class="form-group">
+            {{Form::label('first_name', trans('messages.Given name/Article'), array('class' => 'col-sm-2 control-label'))}}
+            <div class="col-sm-10">
+                {{Form::text('first_name', null, array('placeholder'=>trans('messages.Given name/Article'), 'maxlength'=>50));}}
             </div>
-            <div class="clear">
-            <div class="row">
-                <div class="cell w20">
-                    {{Form::label('last_name', 'Name/Gruppe:')}}
-                </div>
-                <div class="cell w80">
-                    {{Form::text('last_name', null, array('placeholder'=>'Name/Gruppenname', 'required'=>'required', 'maxlength'=>255));}}
-                </div>
-            </div> 
-            <div class="clear">
         </div>
-        {{Form::submit('erstellen');}}
+        <div class="form-group">
+            {{Form::label('last_name', trans('messages.Last Name/Group'), array('class' => 'col-sm-2 control-label'))}}
+            <div class="col-sm-10">
+                {{Form::text('last_name', null, array('placeholder'=>trans('messages.Last Name/Group'), 'required'=>'required', 'maxlength'=>255));}}
+            </div>
+        </div>
+        {{Form::submit(trans('messages.create'), array('class' => 'btn btn-default'));}}
     {{Form::close()}}
 @stop
