@@ -1,11 +1,14 @@
 @extends('base')
 
 @section('content')
-<table class="table-bordered">
-    <tr>
-        <th>&nbsp;</th>
-        <th>{{trans('messages.Medium')}}</th>
-    </tr>    
+<table class="table-bordered dataGrid">
+    <thead>
+        <tr>
+            <th>&nbsp;</th>
+            <th>{{trans('messages.Medium')}}</th>
+        </tr>    
+    </thead>
+    <tbody>
     @foreach($ressources as $ressource)
             <tr>
                 <td>
@@ -15,11 +18,17 @@
                 <td>{{$ressource->name}}</td>
             </tr>
     @endforeach
+    </tbody>
 </table>
-{{$ressources->links()}}
 @stop
 
 @section('javascript')
     @parent
+    {{ HTML::script('_static/js/jquery.dataTables.min.js'); }}
     {{ HTML::script('_static/js/confirm.js'); }}
+    <script type="text/javascript">
+        $( document ).ready(function() {
+            $('.dataGrid').dataTable();
+        });
+    </script>
 @stop

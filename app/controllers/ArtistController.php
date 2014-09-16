@@ -10,7 +10,7 @@ class ArtistController extends \BaseController
             else
             {
 //                $oArtists = Artist::paginate(50);
-                $oArtists = Artist::paginate(50);
+                $oArtists = Artist::all();                
             }
             return View::make('_artist.table')
                     ->with('artists',$oArtists);

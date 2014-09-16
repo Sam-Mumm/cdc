@@ -20,6 +20,8 @@
            </div>
         </div><!-- /.container -->       
         @section('javascript')
+           {{ HTML::script('_static/js/jquery.min.js'); }}
+    <script type="text/javascript">(function($){})(window.jQuery);</script>
             <script data-id="App.Config">
                 var App = {};
                 var basePath = '',
@@ -37,7 +39,6 @@
                     });
                 });
             </script>
-            {{ HTML::script('_static/js/jquery.min.js'); }}
             {{ HTML::script('_static/js/bootstrap.min.js'); }}
         @show
     </body>

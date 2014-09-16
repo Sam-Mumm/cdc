@@ -10,7 +10,8 @@ class CategoryController extends \BaseController {
             }
             else
             {
-                $oCategories = Category::paginate(50);
+//                $oCategories = Category::paginate(50);
+                $oCategories = Category::all();                
             }
             return View::make('_category.table')
                     ->with('categories',$oCategories);

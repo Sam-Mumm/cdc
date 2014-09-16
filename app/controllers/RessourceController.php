@@ -9,7 +9,8 @@ class RessourceController extends \BaseController
             }
             else
             {
-                $oRessources = Ressource::paginate(50);
+//                $oRessources = Ressource::paginate(50);
+                $oRessources = Ressource::all();
             }
             return View::make('_ressource.table')
                     ->with('ressources',$oRessources);

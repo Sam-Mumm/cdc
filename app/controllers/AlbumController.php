@@ -10,7 +10,8 @@ class AlbumController extends \BaseController {
             }
             else
             {
-                $oAlbums = Album::paginate(50);
+//                $oAlbums = Album::paginate(50);
+                $oAlbums = Album::all();                
             }
             return View::make('_album.table')
                     ->with('albums',$oAlbums);

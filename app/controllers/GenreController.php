@@ -10,7 +10,8 @@ class GenreController extends \BaseController
             }
             else
             {
-                $oGenres = Genre::paginate(50);
+//                $oGenres = Genre::paginate(50);
+                $oGenres = Genre::all();                
             }
             return View::make('_genre.table')
                     ->with('genres',$oGenres);
