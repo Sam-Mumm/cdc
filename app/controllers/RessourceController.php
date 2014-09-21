@@ -1,7 +1,7 @@
 <?php
 class RessourceController extends \BaseController
 {
-        public function getIndex($param = null)
+        public function anyIndex($param = null)
         {
             if (!is_null($param))
             {
@@ -9,21 +9,28 @@ class RessourceController extends \BaseController
             }
             else
             {
-//                $oRessources = Ressource::paginate(50);
                 $oRessources = Ressource::all();
             }
-            return View::make('_ressource.table')
-                    ->with('ressources',$oRessources);
-        }
-        
-        public function postIndex($param = null)
-        {
-            if (!is_null($param))
+
+
+            if (Request::ajax())
             {
-                $oRessources = Ressource::where('name','like',$param . '%')->get();
-                return Response::json($oRessources,200);
+                return Response::json(array("data"=> $oRessources->toArray()));
             }
-            return Response::json(array('msg'=>'call this never without parameter'),400);
+            else
+            {
+                $heads= array(array('data' => 'name', 'title'=>trans('messages.Medium')));
+/*		if ($oRessources->count() > 0) {
+			$keys = array_keys($oRessources->first()->toArray());
+                	foreach($keys as $key)
+                	{
+                       		$heads[] = array('data'=>$key,'title'=>ucfirst($key));
+                	}
+		}*/
+                return View::make('_ressource.table')
+                        ->with('ressources',$oRessources)
+			->with('tblHeads',$heads);
+            }
         }
         
         public function getCreate()

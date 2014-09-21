@@ -2,7 +2,7 @@
 
 class GenreController extends \BaseController
 {
-        public function getIndex($param = null)
+        public function anyIndex($param = null)
         {
             if (!is_null($param))
             {
@@ -13,18 +13,25 @@ class GenreController extends \BaseController
 //                $oGenres = Genre::paginate(50);
                 $oGenres = Genre::all();                
             }
-            return View::make('_genre.table')
-                    ->with('genres',$oGenres);
-        }
-        
-        public function postIndex($param = null)
-        {
-            if (!is_null($param))
+            
+            if (Request::ajax())
             {
-                $oGenres = Genre::where('name','like',$param . '%')->get();
-                return Response::json($oGenres,200);
+                return Response::json(array("data"=> $oGenres->toArray()));
             }
-            return Response::json(array('msg'=>'call this never without parameter'),400);
+            else
+            {
+                $heads= array(array('data' => 'name', 'title'=>trans('messages.Genre')));
+/*		if ($oRessources->count() > 0) {
+			$keys = array_keys($oRessources->first()->toArray());
+                	foreach($keys as $key)
+                	{
+                       		$heads[] = array('data'=>$key,'title'=>ucfirst($key));
+                	}
+		}*/
+                return View::make('_genre.table')
+                        ->with('genres',$oGenres)
+			->with('tblHeads',$heads);
+            }
         }
 
         public function getCreate()

@@ -1,7 +1,7 @@
 <?php
 class ArtistController extends \BaseController
 {
-        public function getIndex($param = null)
+        public function anyIndex($param = null)
         {
             if (!is_null($param))
             {
@@ -12,18 +12,26 @@ class ArtistController extends \BaseController
 //                $oArtists = Artist::paginate(50);
                 $oArtists = Artist::all();                
             }
-            return View::make('_artist.table')
-                    ->with('artists',$oArtists);
-        }
-        
-        public function postIndex($param = null)
-        {
-            if (!is_null($param))
+            
+            if (Request::ajax())
             {
-                $oArtists = Artist::where('name','like',$param . '%')->get();
-                return Response::json($oArtists,200);
+                return Response::json(array("data"=> $oArtists->toArray()));
             }
-            return Response::json(array('msg'=>'call this never without parameter'),400);
+            else
+            {
+                $heads= array(array('data' => 'first_name', 'title'=>trans('messages.Given name/Article')),
+                              array('data' => 'last_name', 'title'=>trans('messages.Last Name/Group')));
+/*		if ($oRessources->count() > 0) {
+			$keys = array_keys($oRessources->first()->toArray());
+                	foreach($keys as $key)
+                	{
+                       		$heads[] = array('data'=>$key,'title'=>ucfirst($key));
+                	}
+		}*/
+                return View::make('_artist.table')
+                        ->with('artists',$oArtists)
+			->with('tblHeads',$heads);
+            }
         }
 
         public function getCreate()
