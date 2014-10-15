@@ -2,7 +2,7 @@
 
 class CategoryController extends \BaseController {
 
-        public function getIndex($param = null)
+        public function anyIndex($param = null)
         {
             if (!is_null($param))
             {
@@ -10,21 +10,29 @@ class CategoryController extends \BaseController {
             }
             else
             {
-//                $oCategories = Category::paginate(50);
+//                $oGenres = Genre::paginate(50);
                 $oCategories = Category::all();                
             }
-            return View::make('_category.table')
-                    ->with('categories',$oCategories);
-        }
-        
-        public function postIndex($param = null)
-        {
-            if (!is_null($param))
+            
+            if (Request::ajax())
             {
-                $oCategories = Category::where('name','like',$param . '%')->get();
-                return Response::json($oCategories,200);
+                return Response::json(array("data"=> $oCategories->toArray()));
             }
-            return Response::json(array('msg'=>'call this never without parameter'),400);
+            else
+            {
+                $heads= array(array('data' => 'name', 'title'=>trans('messages.Category')),
+                              array('data' => 'show_artist', 'title'=>trans('messages.show artist')));
+/*		if ($oRessources->count() > 0) {
+			$keys = array_keys($oRessources->first()->toArray());
+                	foreach($keys as $key)
+                	{
+                       		$heads[] = array('data'=>$key,'title'=>ucfirst($key));
+                	}
+		}*/
+                return View::make('_category.table')
+                        ->with('categories',$oCategories)
+			->with('tblHeads',$heads);
+            }
         }
         
         public function getCreate()
