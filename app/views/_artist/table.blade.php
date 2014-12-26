@@ -15,7 +15,11 @@
 		"processing": true,
         	"serverSide": true,
 		"ajax": "{{url('artist/index')}}",
-		"columns": {{json_encode($tblHeads)}}
+		"columns": {{json_encode($tblHeads)}},
+                "columnDefs": [{
+                    "targets": 2,
+                    "render": function (data) { return 'del2-link'; }
+                    }],
             });
         });
     </script>

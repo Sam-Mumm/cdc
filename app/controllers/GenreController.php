@@ -60,20 +60,10 @@ class GenreController extends \BaseController
                 return Redirect::to('genre/create')->withErrors($validator)->withInput();                
             }
 	}
-
-        public function getEdit($id)
+       
+        public function postUpdate()
         {
-            $oGenre = Genre::find($id);
-
-            if(is_object($oGenre))
-            {
-                return View::make('_genre.edit')->with('data',$oGenre);
-            }        
-        }
-        
-        public function postUpdate($id)
-        {
-            $oGenre = Genre::find($id);
+            $oGenre = Genre::find(Input::get('pk'));
 
             if(is_object($oGenre))
             {
@@ -81,13 +71,14 @@ class GenreController extends \BaseController
                 
                 if($validator->passes())
                 {
-                    $oGenre->name=Input::get('name');
+                    $oGenre->name=Input::get('value');
                     $oGenre->save();
-                    return Redirect::to('genre')->with('message','genre updated!');
+/*                    return Redirect::to('genre')->with('message','genre updated!');
+
                 }
                 else
                 {
-                    return Redirect::to('genre/edit')->withErrors($validator)->withInput();                
+                    return Redirect::to('genre/edit')->withErrors($validator)->withInput();    */            
                 }
             }
         }
@@ -99,15 +90,16 @@ class GenreController extends \BaseController
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function postDestroy($id)
+	public function anyDestroy($id)
 	{
-            $oGenre = Genre::find($id);
+/*            $oGenre = Genre::find($id);
 
             if(is_object($oGenre))
             {
                 $oGenre->destroy($id);
                 return Redirect::to('genre')->with('message','genre successfully deleted!');
-            }
+            }*/
+            echo "Loeschen";
         }
 }
 ?>

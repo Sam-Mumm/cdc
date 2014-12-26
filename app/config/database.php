@@ -55,8 +55,8 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'cdc_laravel',
-			'username'  => 'root',
+			'database'  => 'cdc',
+			'username'  => 'cdc_user',
 			'password'  => 'keineahnung',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
