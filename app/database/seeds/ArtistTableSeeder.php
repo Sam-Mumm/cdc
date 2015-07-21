@@ -7,8 +7,8 @@ class ArtistTableSeeder extends Seeder{
         for($i=0; $i<10;$i++)
         {
             $artist=new Artist();
-            $artist->first_name = $faker->firstName();
-            $artist->last_name = $faker->lastName();
+            $artist->first_name = $faker->unique()->firstName();
+            $artist->last_name = $faker->unique()->lastName();
             $artist->save();
         }
     }

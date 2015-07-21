@@ -7,7 +7,7 @@ class GenreTableSeeder extends Seeder{
         for($i=0; $i<10;$i++)
         {
             $genre=new Genre();
-            $genre->name = $faker->sentence();
+            $genre->name = $faker->unique()->word();
             $genre->save();
         }
     }
