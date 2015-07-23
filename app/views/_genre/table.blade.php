@@ -20,8 +20,8 @@
                 "columnDefs": [{
                     "targets": 1,
                     "render": function (data) {
-                            var delLink='<a href="/genre/destroy/3" class="data-confirm" onclick="return confirm(\"bla\");">X</a>';
-                            return delLink;
+                            var relLink='<a href="/genre/destroy/3"><span class="glyphicon glyphicon-filter"></span></a>';
+                            return relLink;
                         }
                     }],
                 "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
@@ -33,6 +33,17 @@
                         .text(aData['name']);
                         anker.editable({type: 'text', url: '/genre/update'});
                         $('td:eq(0)', nRow).html(anker);
+                        
+                        var delIcon = $('<span>').addClass('glyphicon glyphicon-trash');
+                        var delLink = $('<a>').prop({
+                                            'href':'/genre/destroy/'+aData['id']
+                        }).append(delIcon);
+                        $(delLink).click(
+                                function(e){e.preventDefault();alert('test');
+                        });
+                        
+
+                        $('td:eq(1)', nRow).append(delLink);
                     }
             });
 

@@ -1,0 +1,27 @@
+<?php $__env->startSection('content'); ?>
+<table class="table-bordered dataGrid">
+</table>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('javascript'); ?>
+    @parent
+    <?php echo HTML::script('_static/js/jquery.dataTables.js');; ?>
+
+    <?php echo HTML::script('_static/js/confirm.js');; ?>
+
+    <script type="text/javascript">
+        $( document ).ready(function() {
+            $('.dataGrid').dataTable({
+		"processing": true,
+        	"serverSide": true,
+		"ajax": "<?php echo url('artist/index'); ?>",
+		"columns": <?php echo json_encode($tblHeads); ?>,
+                "columnDefs": [{
+                    "targets": 2,
+                    "render": function (data) { return 'del2-link'; }
+                    }],
+            });
+        });
+    </script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('base', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
