@@ -82,7 +82,8 @@ class InitDatabase extends Migration {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('artist_id')->unsigned();
-            $table->integer('cd_id')->unsigned(); 
+            $table->integer('cd_id')->unsigned();
+            $table->integer('number')->unsigned();
             $table->string('name',75);  
             $table->integer('length')->unsigned();
             $table->boolean('show_artist');
