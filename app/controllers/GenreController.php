@@ -21,13 +21,7 @@ class GenreController extends \BaseController
             else
             {
                 $heads= array(array('data' => 'name', 'title'=>trans('messages.Genre')));
-/*		if ($oRessources->count() > 0) {
-			$keys = array_keys($oRessources->first()->toArray());
-                	foreach($keys as $key)
-                	{
-                       		$heads[] = array('data'=>$key,'title'=>ucfirst($key));
-                	}
-		}*/
+
                 return View::make('_genre.table')
                         ->with('genres',$oGenres)
 			->with('tblHeads',$heads);
@@ -72,13 +66,7 @@ class GenreController extends \BaseController
                 if($validator->passes())
                 {
                     $oGenre->name=Input::get('value');
-                    $oGenre->save();
-/*                    return Redirect::to('genre')->with('message','genre updated!');
-
-                }
-                else
-                {
-                    return Redirect::to('genre/edit')->withErrors($validator)->withInput();    */            
+                    $oGenre->save();           
                 }
             }
         }
@@ -92,14 +80,13 @@ class GenreController extends \BaseController
 	 */
 	public function anyDestroy($id)
 	{
-/*            $oGenre = Genre::find($id);
+            $oGenre = Genre::find($id);
 
             if(is_object($oGenre))
             {
                 $oGenre->destroy($id);
                 return Redirect::to('genre')->with('message','genre successfully deleted!');
-            }*/
-            echo "Loeschen";
+            }
         }
 }
 ?>

@@ -35,14 +35,12 @@
                         $('td:eq(0)', nRow).html(anker);
                         
                         var delIcon = $('<span>').addClass('glyphicon glyphicon-trash');
-                        var delLink = $('<a>').prop({
-                                            'href':'/genre/destroy/'+aData['id']
-                        }).append(delIcon);
-                        $(delLink).click(
-                                function(e){e.preventDefault();alert('test');
-                        });
+                        var delLink = $('<a>').prop("href", "/genre/destroy/"+aData['id']) 
+                                .data("confirm", "Do you really want to delete this genre?")      
+                                .append(delIcon);
+                        console.log($(delLink).data('confirm'));
+                        $(delLink).click(CD);
                         
-
                         $('td:eq(1)', nRow).append(delLink);
                     }
             });
