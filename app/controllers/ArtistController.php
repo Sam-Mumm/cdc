@@ -61,35 +61,25 @@ class ArtistController extends \BaseController
                 return Redirect::to('artist/create')->withErrors($validator)->withInput();                
             }
 	}
-
-        public function getEdit($id)
-        {
-            $oArtist = Artist::find($id);
-
-            if(is_object($oArtist))
-            {
-                return View::make('_artist.edit')->with('data', $oArtist);
-            }        
-        }
         
-        public function postUpdate($id)
+        public function postUpdate()
         {
-            $oArtist = Artist::find($id);
-
+            $oArtist = Artist::find(Input::get('pk'));
+            
             if(is_object($oArtist))
             {
-                $validator = Validator::make(Input::all(), Artist::$rules);
-                
-                if($validator->passes())
+                if(Input::get('name')=='first_name')
                 {
-                    $oArtist->first_name=Input::get('first_name');
-                    $oArtist->last_name=Input::get('last_name');
+                    $oArtist->first_name=Input::get('value');
                     $oArtist->save();
-                    return Redirect::to('artist')->with('message','artist updated!');
-                }
-                else
+                } 
+                elseif (Input::get('name')=='last_name')
                 {
-                    return Redirect::to('artist/edit')->withErrors($validator)->withInput();                
+                    if(!empty(Input::get('value')))
+                    {
+                        $oArtist->last_name=Input::get('value');
+                        $oArtist->save();                        
+                    }
                 }
             }
         }
