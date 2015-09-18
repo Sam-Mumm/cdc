@@ -38,7 +38,6 @@
                         var delLink = $('<a>').prop("href", "/genre/destroy/"+aData['id']) 
                                 .data("confirm", "Do you really want to delete this genre?")      
                                 .append(delIcon);
-                        console.log($(delLink).data('confirm'));
                         $(delLink).click(CD);
                         
                         $('td:eq(1)', nRow).append(delLink);

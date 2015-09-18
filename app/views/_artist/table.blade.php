@@ -47,7 +47,6 @@
                         var delLink = $('<a>').prop("href", "/artist/destroy/"+aData['id']) 
                                 .data("confirm", "Do you really want to delete this artist?")      
                                 .append(delIcon);
-                        console.log($(delLink).data('confirm'));
                         $(delLink).click(CD);
                         
                         $('td:eq(2)', nRow).append(delLink);
