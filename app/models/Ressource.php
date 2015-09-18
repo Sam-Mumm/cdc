@@ -4,7 +4,7 @@ class Ressource extends Eloquent
     protected $table = "ressource";
     
     public static $rules = array(
-        'medium'=>'required|max:50');
+        'name'=>'required|max:50');
     
     public function album()
     {

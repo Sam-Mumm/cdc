@@ -5,7 +5,7 @@ class RessourceController extends \BaseController
         {
             if (!is_null($param))
             {
-                $oRessources = Ressource::where('name','like',$param . '%')->paginate(50);
+                $oRessources = Ressource::where('medium','like',$param . '%')->paginate(50);
             }
             else
             {
@@ -55,38 +55,22 @@ class RessourceController extends \BaseController
             }
 	}
         
-        public function getEdit($id)
+        public function postUpdate()
         {
-            $oRessource = Ressource::find($id);
-
-            if(is_object($oRessource))
-            {
-                return View::make('_ressource.edit')->with('data', $oRessource);
-            }        
-        }
-        
-        public function postUpdate($id)
-        {
-            $oRessource = Ressource::find($id);
-
+            $oRessource = Ressource::find(Input::get('pk'));
             if(is_object($oRessource))
             {
                 $validator = Validator::make(Input::all(), Ressource::$rules);
                 
                 if($validator->passes())
                 {
-                    $oRessource->name=Input::get('medium');
+                    $oRessource->name=Input::get('value');
                     $oRessource->save();
-                    return Redirect::to('ressource')->with('message','ressource updated!');
-                }
-                else
-                {
-                    return Redirect::to('ressource/edit')->withErrors($validator)->withInput();                
                 }
             }
         }
         
-	public function postDestroy($id)
+	public function anyDestroy($id)
 	{
             $oRessource = Ressource::find($id);
 
