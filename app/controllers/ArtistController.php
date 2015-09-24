@@ -1,37 +1,39 @@
 <?php
 class ArtistController extends \BaseController
 {
-        public function anyIndex($param = null)
+        public function getData()
         {
-            if (!is_null($param))
+            $data = Artist::getModel();
+            
+            if(Input::get('search.value') !== '')
             {
-                $oArtists = Artist::where('name','like',$param . '%')->paginate(50);
-            }
-            else
-            {
-//                $oArtists = Artist::paginate(50);
-                $oArtists = Artist::all();                
+                $search = Input::get('search.value', '');
+                $data = $data->where('first_name','LIKE',"%$search%")->orWhere('last_name','LIKE',"%$search%");
             }
             
-            if (Request::ajax())
-            {
-                return Response::json(array("data"=> $oArtists->toArray()));
-            }
-            else
-            {
-                $heads= array(array('data' => 'first_name', 'title'=>trans('messages.Given name/Article')),
-                              array('data' => 'last_name', 'title'=>trans('messages.Last Name/Group')));
-/*		if ($oRessources->count() > 0) {
-			$keys = array_keys($oRessources->first()->toArray());
-                	foreach($keys as $key)
-                	{
-                       		$heads[] = array('data'=>$key,'title'=>ucfirst($key));
-                	}
-		}*/
-                return View::make('_artist.table')
-                        ->with('artists',$oArtists)
-			->with('tblHeads',$heads);
-            }
+            $start = Input::get('start', 0);
+            $length = Input::get('length', 10);
+            
+            $filtered = $data->count();
+            $data = $data->skip($start)->take($length);
+            
+            $data = $data->get()->toArray();
+            $total = Artist::count();
+            return [
+                'draw' => Input::get('draw', 1),
+                'recordsTotal' => $total,
+                'recordsFiltered' => $filtered,
+                'data' => $data
+            ];
+        }
+
+        public function anyIndex($param = null)
+        {
+            $heads= array(array('data' => 'first_name', 'title'=>trans('messages.Given name/Article')),
+                          array('data' => 'last_name', 'title'=>trans('messages.Last Name/Group')));
+
+            return View::make('_artist.table')
+                                ->with('tblHeads',$heads);
         }
 
         public function getCreate()

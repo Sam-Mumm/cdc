@@ -2,6 +2,12 @@
 
 @section('content')
 <table class="table-bordered dataGrid">
+    <tfoot>
+		<tr>
+			<th></th>
+			<th></th>
+		</tr>
+	</tfoot>
 </table>
 @stop
 
@@ -12,10 +18,10 @@
     {{ HTML::script('_static/js/confirm.js'); }}
     <script type="text/javascript">
         $( document ).ready(function() {
-            $('.dataGrid').dataTable({
+            var table=$('.dataGrid').DataTable({
 		"processing": true,
-        	"serverSide": true,
-		"ajax": "{{url('artist/index')}}",
+               	"serverSide": true,
+		"ajax": "{{url('artist/data')}}",	
 		"columns": {{json_encode($tblHeads)}},
                 "columnDefs": [{
                         "targets": 2,
