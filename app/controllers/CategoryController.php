@@ -1,38 +1,41 @@
 <?php
 
-class CategoryController extends \BaseController {
-
-        public function anyIndex($param = null)
+class CategoryController extends \BaseController
+{
+        public function getData()
         {
-            if (!is_null($param))
+            $data = Category::getModel();
+            
+            if(Input::get('search.value') !== '' )
             {
-                $oCategories = Category::where('name','like',$param . '%')->paginate(50);
-            }
-            else
-            {
-//                $oGenres = Genre::paginate(50);
-                $oCategories = Category::all();                
+                $search = Input::get('search.value', '');
+                $data = $data->where('name', 'LIKE', "%$search%");
             }
             
-            if (Request::ajax())
-            {
-                return Response::json(array("data"=> $oCategories->toArray()));
-            }
-            else
-            {
-                $heads= array(array('data' => 'name', 'title'=>trans('messages.Category')),
-                              array('data' => 'show_artist', 'title'=>trans('messages.show artist')));
-/*		if ($oRessources->count() > 0) {
-			$keys = array_keys($oRessources->first()->toArray());
-                	foreach($keys as $key)
-                	{
-                       		$heads[] = array('data'=>$key,'title'=>ucfirst($key));
-                	}
-		}*/
-                return View::make('_category.table')
-                        ->with('categories',$oCategories)
+            $start = Input::get('start', 0);
+            $length = Input::get('length', 10);
+            
+            $filtered = $data->count();
+            $data = $data->skip($start)->take($length);
+            
+            $data = $data->get()->toArray();
+            $total = Category::count();
+            
+            return [
+                'draw' => Input::get('draw',1),
+                'recordsTotal' => $total,
+                'recordsFiltered' => $filtered,
+                'data' => $data
+            ];
+        }
+    
+        public function anyIndex($param = null)
+        {
+           $heads= array(array('data' => 'name', 'title'=>trans('messages.Category')),
+                         array('data' => 'show_artist', 'title'=>trans('messages.show artist')));
+
+           return View::make('_category.table')
 			->with('tblHeads',$heads);
-            }
         }
         
         public function getCreate()
@@ -68,24 +71,21 @@ class CategoryController extends \BaseController {
             }        
         }
         
-        public function postUpdate($id)
+        public function postUpdate()
         {
-            $oCategory = Category::find($id);
+            $oCategory = Category::find(Input::get('pk'));
 
             if(is_object($oCategory))
             {
-                $validator = Validator::make(Input::all(), Category::$rules);
-                
-                if($validator->passes())
+                if(Input::get('name')=='name')
                 {
-                    $oCategory->name=Input::get('name');
-                    $oCategory->show_artist=Input::get('show_artist');
-                    $oCategory->save();
-                    return Redirect::to('category')->with('message','category updated!');
+                    $oCategory->name=Input::get('value');
+                    $oCategory->save();                   
                 }
-                else
+                elseif (Input::get('name')=='show_artist')
                 {
-                    return Redirect::to('category/edit')->withErrors($validator)->withInput();                
+                    $oCategory->show_artist=Input::get('value');
+                    $oCategory->save();
                 }
             }
         }
