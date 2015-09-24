@@ -2,30 +2,39 @@
 
 class GenreController extends \BaseController
 {
-        public function anyIndex($param = null)
+        public function getData()
         {
-            if (!is_null($param))
+            $data = Genre::getModel();
+            
+            if(Input::get('search.value') !== '' )
             {
-                $oGenres = Genre::where('name','like',$param . '%')->paginate(50);
-            }
-            else
-            {
-//                $oGenres = Genre::paginate(50);
-                $oGenres = Genre::all();                
+                $search = Input::get('search.value', '');
+                $data = $data->where('name', 'LIKE', "%$search%");
             }
             
-            if (Request::ajax())
-            {
-                return Response::json(array("data"=> $oGenres->toArray()));
-            }
-            else
-            {
-                $heads= array(array('data' => 'name', 'title'=>trans('messages.Genre')));
+            $start = Input::get('start',0);
+            $length = Input::get('length',10);
 
-                return View::make('_genre.table')
-                        ->with('genres',$oGenres)
-			->with('tblHeads',$heads);
-            }
+            $filtered = $data->count();
+            $data = $data->skip($start)->take($length);
+
+            $data = $data->get()->toArray();
+            $total = Genre::count();
+            
+            return [
+                'draw' => Input::get('draw',1),
+                'recordsTotal' => $total,
+                'recordsFiltered' => $filtered,
+                'data' => $data
+            ];
+        }
+
+        public function anyIndex($param = null)
+        {
+            $heads= array(array('data' => 'name', 'title'=>trans('messages.Genre')));
+
+            return View::make('_genre.table')
+                               ->with('tblHeads',$heads);
         }
 
         public function getCreate()
