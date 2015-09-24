@@ -15,7 +15,7 @@
             $('.dataGrid').dataTable({
 		"processing": true,
         	"serverSide": true,
-		"ajax": "{{url('ressource/index')}}",
+		"ajax": "{{url('ressource/data')}}",
 		"columns": {{json_encode($tblHeads)}},
                 "columnDefs": [{
                     "targets": 1,

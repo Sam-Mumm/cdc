@@ -1,36 +1,40 @@
 <?php
 class RessourceController extends \BaseController
 {
+        public function getData()
+        {
+            $data = Ressource::getModel();
+            
+            if(Input::get('search.value') !== '')
+            {
+                $search = Input::get('search.value', '');
+                $data = $data->where('name', 'LIKE', "%$search%");
+            }
+            
+            $start = Input::get('start', 0);
+            $length = Input::get('length', 10);
+            
+            $filtered = $data->count();
+            $data = $data->skip($start)->take($length);
+            
+            $data = $data->get()->toArray();
+            $total = Ressource::count();
+            
+            return [
+                'draw' => Input::get('draw', 1),
+                'recordsTotal' => $total,
+                'recordsFiltered' => $filtered,
+                'data' => $data
+            ];
+        }
+
+
         public function anyIndex($param = null)
         {
-            if (!is_null($param))
-            {
-                $oRessources = Ressource::where('medium','like',$param . '%')->paginate(50);
-            }
-            else
-            {
-                $oRessources = Ressource::all();
-            }
+            $heads= array(array('data' => 'name', 'title'=>trans('messages.Medium')));
 
-
-            if (Request::ajax())
-            {
-                return Response::json(array("data"=> $oRessources->toArray()));
-            }
-            else
-            {
-                $heads= array(array('data' => 'name', 'title'=>trans('messages.Medium')));
-/*		if ($oRessources->count() > 0) {
-			$keys = array_keys($oRessources->first()->toArray());
-                	foreach($keys as $key)
-                	{
-                       		$heads[] = array('data'=>$key,'title'=>ucfirst($key));
-                	}
-		}*/
-                return View::make('_ressource.table')
-                        ->with('ressources',$oRessources)
-			->with('tblHeads',$heads);
-            }
+            return View::make('_ressource.table')
+                              ->with('tblHeads',$heads);
         }
         
         public function getCreate()
