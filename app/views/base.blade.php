@@ -8,7 +8,7 @@
         </title>
         @section('css')
             {{ HTML::style('_static/css/screen.css'); }}
-            {{ HTML::style('_static/css/bootstrap.min.css'); }}
+            {{ HTML::style('_static/css/bootstrap.css'); }}
         @show
     </head>
     <body>
@@ -20,7 +20,7 @@
            </div>
         </div><!-- /.container -->       
         @section('javascript')
-           {{ HTML::script('_static/js/jquery.min.js'); }}
+           {{ HTML::script('_static/js/jquery.js'); }}
     <script type="text/javascript">(function($){})(window.jQuery);</script>
             <script data-id="App.Config">
                 var App = {};
@@ -39,7 +39,7 @@
                     });
                 });
             </script>
-            {{ HTML::script('_static/js/bootstrap.min.js'); }}
+            {{ HTML::script('_static/js/bootstrap.js'); }}
         @show
     </body>
 </html>
