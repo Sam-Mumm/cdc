@@ -33,10 +33,20 @@ class AlbumController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function create()
+	public function getCreate()
 	{
-		//
-	}
+            $oArtist = Artist::selectRaw('CONCAT(first_name, " ", last_name) AS full_name, id')->lists('full_name', 'id');
+            $oRessource = Ressource::lists('name', 'id');
+            $oGenre = Genre::lists('name', 'id');
+            $oCategory = Category::all();
+            
+            return View::make('_album.create')
+                                ->with('artist', $oArtist)
+                                ->with('ressource', $oRessource)
+                                ->with('genre', $oGenre)
+                                ->with('category', $oCategory);
+
+        }
 
 
 	/**
