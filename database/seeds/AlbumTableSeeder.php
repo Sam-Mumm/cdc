@@ -1,5 +1,6 @@
 <?php
 
+use App\Album;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 use \App\Genre;
@@ -24,8 +25,6 @@ class AlbumTableSeeder extends Seeder
 
         $this->hide_artist($genre_list, $medium_list, $artist_list);
 
-
-
     }
 
     public function show_artist($genre, $medium)
@@ -34,16 +33,10 @@ class AlbumTableSeeder extends Seeder
 
         $faker = Faker::create();
 
-        for($i=0; $i<20; $i++)
-        {
-            DB::table('album')->insert([
-                'title' => $faker->word,
-                'year' => $faker->numberBetween($min = 1970, $max = 2020),
+            factory(Album::class, 20)->create([
                 'genre_id' => $faker->randomElement($genre),
                 'category_id' => $faker->randomElement($category_list),
-                'medium_id' => $faker->randomElement($medium)
             ]);
-        }
     }
 
     public function hide_artist($genre, $medium, $artist)

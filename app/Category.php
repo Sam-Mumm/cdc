@@ -3,17 +3,18 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
     protected $table = "category";
-    public static $rules = array(
-        'name' => 'required|min:1|max:50',
-        'show_artist' => 'sometimes|boolean'
-    );
 
-    public function album()
+    protected $fillable = [
+        'name', 'show_artist'
+    ];
+
+    public function album(): HasMany
     {
-        return $this->hasMany('Album');
+        return $this->hasMany(Album::class);
     }
 }
