@@ -15,6 +15,6 @@ class Track extends Model
 
     public function artist(): BelongsTo
     {
-        return $this->belongsTo('ArtistRequest');
+        return $this->belongsTo(Artist::class);
     }
 }
