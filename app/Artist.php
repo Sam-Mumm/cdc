@@ -3,24 +3,21 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Artist extends Model
 {
     protected $table = "artist";
 
-    public static $rules = array(
-        'first_name' => 'sometimes|min:1|max:50',
-        'last_name' => 'required|min:1|max:50'
-    );
+    protected $fillable = ['first_name', 'last_name'];
 
     public function track()
     {
-        return $this->hasMany('track');
+        return $this->hasMany(Track::class);
     }
 
-    public function album_artist()
+    public function albums(): BelongsToMany
     {
-        return $this->hasMany('album_artist');
+        return $this->belongsToMany(Album::class)->using(AlbumArtists::class);
     }
-
 }
