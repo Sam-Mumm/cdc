@@ -3,17 +3,18 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CD extends Model
 {
     protected $table = "cd";
-    public static $rules = array(
-        'name' => 'required|integer|min:1'
-    );
+    protected $fillable = [
+        'cd_no'
+    ];
 
-    public function album()
+    public function album(): BelongsTo
     {
-        return $this->belongsTo('Album');
+        return $this->belongsTo(Album::class);
     }
 
 

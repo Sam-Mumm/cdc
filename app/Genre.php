@@ -3,16 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Genre extends Model
 {
     protected $table = "genre";
-    public static $rules = array(
-        'name' => 'required|min:1|max:50'
-    );
 
-    public function album()
+    public function album(): HasMany
     {
-        return $this->hasMany('Album');
+        return $this->hasMany(Album::class);
     }
 }

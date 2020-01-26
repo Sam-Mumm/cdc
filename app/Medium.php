@@ -7,14 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Medium extends Model
 {
     protected $table = "medium";
-    protected $fillable = array('name');
+    protected $fillable = ['name'];
 
-    public static $rules = array(
-        'name' => 'required|min:1|max:50'
-    );
-
-    public function album()
+    public function album(): HasMany
     {
-        return $this->hasMany('Album');
+        return $this->hasMany(Album::class);
     }
 }
